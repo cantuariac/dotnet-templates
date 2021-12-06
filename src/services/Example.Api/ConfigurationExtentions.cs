@@ -1,19 +1,17 @@
-﻿using ApiExemple.Data;
-using ApiExemple.Services;
+﻿using ExampleApi.Data;
+using ExampleApi.Services;
 using Core.Business;
 using Core.Business.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace ApiExemple
+namespace ExampleApi
 {
     public static class ConfigurationExtentions
     {
         public static IServiceCollection ResolvePostgres(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ExempleDbContext>(options =>
+            services.AddDbContext<ExampleDbContext>(options =>
             {
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
                 options.UseNpgsql(connectionString);

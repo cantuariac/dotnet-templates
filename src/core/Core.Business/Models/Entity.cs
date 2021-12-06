@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace Core.Business.Models
 {
-    public class Entity<IdType> where IdType : IComparable
+    public abstract class Entity<IdType> : IValidable where IdType : IComparable
     {
         public IdType Id { get; set; }
+
+        public bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public interface IValidable
+    {
+        public bool IsValid();
     }
 }

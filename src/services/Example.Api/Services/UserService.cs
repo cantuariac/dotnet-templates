@@ -1,5 +1,5 @@
-﻿using ApiExemple.Data;
-using ApiExemple.Models;
+﻿using ExampleApi.Data;
+using ExampleApi.Models;
 using Core.Business;
 using Core.Business.Interfaces;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiExemple.Services
+namespace ExampleApi.Services
 {
     public class UserService : CoreService, IUserService
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ApiExemple.Models
+namespace ExampleApi.Models
 {
     public class UserMapping : IEntityTypeConfiguration<User>
     {

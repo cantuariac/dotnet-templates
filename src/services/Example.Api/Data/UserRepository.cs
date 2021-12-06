@@ -1,11 +1,11 @@
-﻿using ApiExemple.Models;
+﻿using ExampleApi.Models;
 using Core.Data;
 
-namespace ApiExemple.Data
+namespace ExampleApi.Data
 {
     public class UserRepository : GenericRepository<User, int>, IUserRepository
     {
-        public UserRepository(ExempleDbContext context) : base(context)
+        public UserRepository(ExampleDbContext context) : base(context)
         {
         }
     }

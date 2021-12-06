@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace ApiExemple.Migrations
+namespace ExampleApi.Migrations
 {
     public partial class create_user_table : Migration
     {

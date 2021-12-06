@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 
-namespace ApiExemple.Models
+namespace ExampleApi.Models
 {
     public class Post : Entity<Guid>
     {

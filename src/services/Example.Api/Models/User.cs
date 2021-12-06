@@ -1,6 +1,6 @@
 ﻿using Core.Business.Models;
 
-namespace ApiExemple.Models
+namespace ExampleApi.Models
 {
     public class User : Entity<int>
     {
