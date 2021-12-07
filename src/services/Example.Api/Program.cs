@@ -1,12 +1,15 @@
+using Core.Api;
 using ExampleApi;
+using ExampleApi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
 // Add services to the container.
 
-builder.Services.ResolvePostgres(configuration);
+builder.Services.ResolvePostgres<ExampleDbContext>(configuration.GetConnectionString("DefaultConnection"));
 builder.Services.ResolveDependencyInjection();
+builder.Services.ResolveJWT(configuration.GetSection("JWT:Secret").Value);
 builder.Services.ResolveSwagger();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,6 +28,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

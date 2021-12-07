@@ -4,22 +4,14 @@ using Core.Business;
 using Core.Business.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ExampleApi
 {
     public static class ConfigurationExtentions
     {
-        public static IServiceCollection ResolvePostgres(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContext<ExampleDbContext>(options =>
-            {
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
-                options.UseNpgsql(connectionString);
-            }
-                );
-            return services;
-        }
-
         public static IServiceCollection ResolveDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped<INotificator, Notificator>();

@@ -1,37 +1,46 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace Core.Api
 {
     public static class ConfigurationExtentions
     {
-        public static IServiceCollection ResolvePostgres(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ResolvePostgres<T>(this IServiceCollection services, String connectionString) where T : DbContext
         {
-            services.AddDbContext<DbContext>(options =>
+            services.AddDbContext<T>(options =>
             {
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
-                options.UseNpgsql();
+                options.UseNpgsql(connectionString);
             }
                 );
             return services;
         }
 
-        //public static IServiceCollection ResolveDependencyInjection(this IServiceCollection services)
-        //{
-        //    //services.AddScoped<IMongoUserRepository, MongoUserRepository>();
-
-        //    return services;
-        //}
-
-        //public static IServiceCollection ResolveSwagger(this IServiceCollection services) {
-
-        //    services.AddSwaggerGen(c =>
-        //    {
-        //        c.SwaggerDoc("v1", new OpenApiInfo { Title = "Core.Api", Version = "v1" });
-        //    });
-        //    return services;
-        //}
+        public static IServiceCollection ResolveJWT(this IServiceCollection services, String secret)
+        {
+            var secret_bytes = Encoding.ASCII.GetBytes(secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(secret_bytes),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+            return services;
+        }
     }
 }

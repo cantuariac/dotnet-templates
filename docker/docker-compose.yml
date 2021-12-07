@@ -9,7 +9,7 @@ services:
     container_name: dev_postgres
     environment:
       POSTGRES_USER: "root"
-      POSTGRES_PASSWORD: "984rt823ryw9"
+      POSTGRES_PASSWORD: "root"
     ports:
       - "5432:5432"
     volumes:
@@ -33,7 +33,7 @@ services:
     container_name: dev_mongodb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 984rt823ryw9
+      MONGO_INITDB_ROOT_PASSWORD: root
     ports:
       - 27017:27017
     volumes:
