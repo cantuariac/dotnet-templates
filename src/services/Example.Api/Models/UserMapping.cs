@@ -12,6 +12,9 @@ namespace ExampleApi.Models
             builder.Property(u => u.Username)
                    .HasColumnType("varchar(50)");
 
+            builder.Property(u => u.Password)
+                   .HasColumnType("varchar(256)");
+
         }
     }
 }

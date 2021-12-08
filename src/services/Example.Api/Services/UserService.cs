@@ -20,14 +20,14 @@ namespace ExampleApi.Services
 
         public async Task<User> Create(UserDto entityDto)
         {
-            var user = new User(entityDto.Username);
+            var user = new User(entityDto.Username, "");
             await userRepository.Add(user);
             return user;
         }
 
         public async Task Update(int id, UserDto entityDto)
         {
-            var user = new User(entityDto.Username);
+            var user = new User(entityDto.Username, "");
             await userRepository.Update(user);
         }
 
