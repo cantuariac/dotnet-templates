@@ -1,10 +1,14 @@
 ﻿
 using Core.Business.Interfaces;
 using Core.Business.Models;
+using FluentValidation;
 
 namespace Core.Business
 {
-    public abstract class GenericService<TEntity, TKey, TEntityDto> : IGenericService<TEntity, TKey, TEntityDto> where TEntity : Entity<TKey> where TKey : IComparable
+    public abstract class GenericService<TEntity, TKey, TEntityDto> : IGenericService<TEntity, TKey, TEntityDto>
+                                    where TEntity : Entity<TKey>
+                                    where TKey : IComparable
+                                    where TEntityDto : IValidatable
     {
         protected readonly INotificator _notificator;
         protected readonly IGenericRepository<TEntity, TKey> _repository;
@@ -15,8 +19,12 @@ namespace Core.Business
             _repository = repository;
         }
 
-        public async Task<TEntity> Create(TEntityDto entityDto)
+        public async Task<TEntity?> Create(TEntityDto entityDto)
         {
+            if (!Validate(entityDto))
+            {
+                return null;
+            }
             var user = MapFrom(entityDto);
             if (!await _repository.Add(user))
             {
@@ -37,7 +45,7 @@ namespace Core.Business
             {
                 var user = MapFrom(entityDto);
                 user.Id = id;
-                if(!await _repository.Update(user))
+                if (!await _repository.Update(user))
                 {
                     _notificator.Notify($"Erro interno do servidor");
                     _notificator.SetStatusCode(500);
@@ -61,32 +69,22 @@ namespace Core.Business
 
         public abstract TEntity MapFrom(TEntityDto entityDto);
 
-        //protected bool Validate<TValidator, TEntity>(TValidator validator, TEntity entity) where TValidator : AbstractValidator<TEntity>
-        //{
-        //    var result = validator.Validate(entity);
+        protected bool Validate(TEntityDto entityDto)
+        {
+            var result = entityDto.Validate();
 
-        //    if (result.IsValid)
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        foreach (var error in result.Errors)
-        //        {
-        //            Notify(error.ErrorMessage);
-        //        }
-        //        return false;
-        //    }
-        //}
-
-        //protected void Notify(string message)
-        //{
-        //    _notificator.Notify(new Notification(message));
-        //}
-
-        //protected void Notify(string message, string label)
-        //{
-        //    _notificator.Notify(new Notification(message, label));
-        //}
+            if (result.IsValid)
+            {
+                return true;
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    _notificator.Notify(error.ErrorMessage);
+                }
+                return false;
+            }
+        }
     }
 }

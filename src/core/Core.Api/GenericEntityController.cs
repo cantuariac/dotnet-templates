@@ -19,14 +19,14 @@ namespace Core.Api
             _service = service;
         }
 
-        protected ActionResult ObjectOrNotFound(TEntity obj)
+        protected ActionResult ObjectOrNotFound(TEntity? obj)
         {
             return obj == null ? NotFound() : Ok(obj);
         }
 
         protected ObjectResult CreatedResult(TEntity obj)
         {
-            var action = nameof(TEntity) + "Controller." + nameof(Read);
+            var action = nameof(TEntity) + "." + nameof(Read);
             return CreatedAtRoute(action, obj.Id, obj);
         }
 
@@ -51,7 +51,7 @@ namespace Core.Api
             }
             else
             {
-                var action = nameof(TEntity) + "Controller." + nameof(Read);
+                var action = nameof(TEntity) + "." + nameof(Read);
                 return CreatedAtRoute(action, entity.Id, entity);
             }
         }
@@ -62,7 +62,7 @@ namespace Core.Api
             return Ok(await _repository.GetAll());
         }
 
-        [HttpGet("{id}", Name = nameof(TEntity) + "Controller." + nameof(Read))]
+        [HttpGet("{id}", Name = nameof(TEntity) + "." + nameof(Read))]
         public virtual async Task<ActionResult> Read(TKey id)
         {
             return ObjectOrNotFound(await _repository.Get(id));
