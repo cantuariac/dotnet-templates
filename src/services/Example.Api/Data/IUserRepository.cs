@@ -1,5 +1,5 @@
-﻿using ExampleApi.Models;
-using Core.Data.Interfaces;
+﻿using Core.Business.Interfaces;
+using ExampleApi.Models;
 
 namespace ExampleApi.Data
 {

@@ -1,15 +1,12 @@
 ﻿using Core.Business.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Core.Business.Interfaces
 {
-    public interface IGenericService<TEntityDto, IdType, TEntity>
+    public interface IGenericService<TEntity, TKey, TEntityDto> where TEntity : Entity<TKey> where TKey : IComparable
     {
         Task<TEntity> Create(TEntityDto entityDto);
-        Task Update(IdType id, TEntityDto entityDto);
-        Task Delete(IdType id);
+        Task Update(TKey id, TEntityDto entityDto);
+        Task Delete(TKey id);
 
     }
 }

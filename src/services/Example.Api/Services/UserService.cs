@@ -1,39 +1,40 @@
-﻿using ExampleApi.Data;
-using ExampleApi.Models;
-using Core.Business;
+﻿using Core.Business;
 using Core.Business.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ExampleApi.Data;
+using ExampleApi.Models;
 
 namespace ExampleApi.Services
 {
-    public class UserService : CoreService, IUserService
+    public class UserService : GenericService<User, int, UserDto>, IUserService
     {
         private readonly IUserRepository userRepository;
 
-        public UserService(IUserRepository userRepository, INotificator notificator) : base(notificator)
+        public UserService(INotificator notificator, IUserRepository userRepository) : base(notificator, userRepository)
         {
             this.userRepository = userRepository;
         }
 
-        public async Task<User> Create(UserDto entityDto)
+        public override User MapFrom(UserDto entityDto)
         {
-            var user = new User(entityDto.Username, "");
-            await userRepository.Add(user);
-            return user;
+            return new User(entityDto.Username, "");
         }
 
-        public async Task Update(int id, UserDto entityDto)
-        {
-            var user = new User(entityDto.Username, "");
-            await userRepository.Update(user);
-        }
+        //public async Task<User> Create(UserDto entityDto)
+        //{
+        //    var user = new User(entityDto.Username, "");
+        //    await userRepository.Add(user);
+        //    return user;
+        //}
 
-        public async Task Delete(int id)
-        {
-            await userRepository.Remove(id);
-        }
+        //public async Task Update(int id, UserDto entityDto)
+        //{
+        //    var user = new User(entityDto.Username, "");
+        //    await userRepository.Update(user);
+        //}
+
+        //public async Task Delete(int id)
+        //{
+        //    await userRepository.Remove(id);
+        //}
     }
 }

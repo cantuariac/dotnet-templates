@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Core.Business.Interfaces
+﻿namespace Core.Business.Interfaces
 {
     public interface INotificator
     {
+        int GetStatusCode();
+        void SetStatusCode(int statusCode);
         void Notify(Notification notification);
-        List<Notification> GetNotifications();
+        void Notify(string message);
         bool CheckNotifications();
+        List<Notification> GetNotifications();
     }
 }

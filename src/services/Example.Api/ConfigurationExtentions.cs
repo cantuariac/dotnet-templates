@@ -1,12 +1,8 @@
-﻿using ExampleApi.Data;
-using ExampleApi.Services;
-using Core.Business;
+﻿using Core.Business;
 using Core.Business.Interfaces;
-using Microsoft.EntityFrameworkCore;
+using ExampleApi.Data;
+using ExampleApi.Services;
 using Microsoft.OpenApi.Models;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 namespace ExampleApi
 {

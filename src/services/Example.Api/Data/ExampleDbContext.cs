@@ -1,5 +1,4 @@
-﻿using ExampleApi.Models;
-using Core.Data;
+﻿using Core.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExampleApi.Data

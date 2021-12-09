@@ -1,42 +1,41 @@
 ﻿using Core.Business.Interfaces;
 using FluentValidation;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Core.Business
 {
     public class Notificator : INotificator
     {
         private readonly List<Notification> _notifications;
+        private int StatusCode;
 
         public Notificator()
         {
             _notifications = new List<Notification>();
+            StatusCode = 400;
         }
-
-        public bool CheckNotifications()
+        public int GetStatusCode()
         {
-            return _notifications.Any();
+            return StatusCode;
         }
-
-        public List<Notification> GetNotifications()
+        public void SetStatusCode(int statusCode)
         {
-            return _notifications;
-        }
-
-
-        protected void Notify(string message)
-        {
-            _notifications.Add(new Notification(message));
-        }
-
-        protected void Notify(string message, string label)
-        {
-            _notifications.Add(new Notification(message, label));
+            StatusCode = statusCode;
         }
         public void Notify(Notification notification)
         {
             _notifications.Add(notification);
+        }
+        public void Notify(string message)
+        {
+            _notifications.Add(new Notification(message));
+        }
+        public bool CheckNotifications() 
+        {
+            return _notifications.Any();
+        }
+        public List<Notification> GetNotifications()
+        {
+            return _notifications;
         }
         protected bool Validate<TValidator, TEntity>(TValidator validator, TEntity entity) where TValidator : AbstractValidator<TEntity>
         {

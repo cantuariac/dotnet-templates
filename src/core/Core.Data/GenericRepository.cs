@@ -1,15 +1,11 @@
-﻿using Core.Business.Models;
-using Core.Data.Interfaces;
+﻿using Core.Business.Interfaces;
+using Core.Business.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace Core.Data
 {
-    public abstract class GenericRepository<TEntity, IdType> : IGenericRepository<TEntity, IdType> where TEntity : Entity<IdType> where IdType : IComparable
+    public abstract class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey> where TEntity : Entity<TKey> where TKey : IComparable
     {
         protected readonly DbContext Context;
         protected readonly DbSet<TEntity> DbSet;
@@ -25,36 +21,72 @@ namespace Core.Data
             return await DbSet.ToListAsync();
         }
 
-        public virtual async Task<TEntity> Get(IdType id)
+        public virtual async Task<TEntity?> Get(TKey id)
         {
             return await DbSet.FindAsync(id);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<List<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
         {
             return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
 
-        public virtual async Task Add(TEntity entity)
+        public virtual async Task<bool> Add(TEntity entity)
         {
-            DbSet.Add(entity);
-            await SaveChanges();
+            try
+            {
+                DbSet.Add(entity);
+                await SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public virtual async Task Update(TEntity entity)
+        public virtual async Task<bool> Update(TEntity entity)
         {
-            DbSet.Update(entity);
-            await SaveChanges();
+            try
+            {
+                DbSet.Update(entity);
+                await SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+
+            }
         }
 
-        public virtual async Task Remove(TEntity entity)
+        public virtual async Task<bool> Remove(TEntity entity)
         {
-            DbSet.Remove(entity);
-            await SaveChanges();
+            try
+            {
+                DbSet.Remove(entity);
+                await SaveChanges();
+                return true;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
-        public virtual async Task Remove(IdType id)
+        public virtual async Task<bool> Remove(TKey id)
         {
-            await Remove(await DbSet.FirstOrDefaultAsync(entity => entity.Id.Equals(id)));
+            var entity = await DbSet.FindAsync(id);
+            if (entity != null)
+            {
+                return await Remove(entity);
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public async Task<int> SaveChanges()

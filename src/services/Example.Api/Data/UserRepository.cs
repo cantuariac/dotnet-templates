@@ -1,5 +1,5 @@
-﻿using ExampleApi.Models;
-using Core.Data;
+﻿using Core.Data;
+using ExampleApi.Models;
 
 namespace ExampleApi.Data
 {

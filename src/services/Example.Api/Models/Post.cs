@@ -1,7 +1,6 @@
 ﻿using Core.Business.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace ExampleApi.Models
 {

@@ -1,13 +1,9 @@
-﻿using ExampleApi.Models;
-using Core.Business.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Core.Business.Interfaces;
+using ExampleApi.Models;
 
 namespace ExampleApi.Services
 {
-    public interface IUserService : IGenericService<UserDto, int, User>
+    public interface IUserService : IGenericService<User, int, UserDto>
     {
     }
 }
