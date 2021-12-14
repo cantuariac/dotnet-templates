@@ -6,9 +6,9 @@ using FluentValidation;
 namespace Core.Business
 {
     public abstract class GenericService<TEntity, TKey, TEntityDto> : IGenericService<TEntity, TKey, TEntityDto>
-                                    where TEntity : Entity<TKey>
-                                    where TKey : IComparable
-                                    where TEntityDto : IValidatable
+                                                    where TEntity : Entity<TKey>
+                                                    where TKey : IComparable
+                                                    where TEntityDto : IValidatable
     {
         protected readonly INotificator _notificator;
         protected readonly IGenericRepository<TEntity, TKey> _repository;
@@ -17,6 +17,11 @@ namespace Core.Business
         {
             _notificator = notificator;
             _repository = repository;
+        }
+
+        public async Task<List<TEntity>> ReadAll()
+        {
+            return await _repository.GetAll();
         }
 
         public async Task<TEntity?> Create(TEntityDto entityDto)
@@ -33,12 +38,26 @@ namespace Core.Business
             }
             return user;
         }
+        public async Task<TEntity?> Read(TKey id)
+        {
+            var entity = await _repository.Get(id);
+            if (entity == null)
+            {
+                _notificator.Notify($"Não existe um {typeof(TEntity).Name} com {nameof(id)} = {id}");
+                _notificator.SetStatusCode(404);
+                return null;
+            }
+            else
+            {
+                return entity;
+            }
+        }
 
         public async Task Update(TKey id, TEntityDto entityDto)
         {
-            if (await _repository.Get(id) == null)
+            if (!_repository.Exists(id))
             {
-                _notificator.Notify($"Não existe um {nameof(TEntity)} com {nameof(id)} = {id}");
+                _notificator.Notify($"Não existe um {typeof(TEntity).Name} com {nameof(id)} = {id}");
                 _notificator.SetStatusCode(404);
             }
             else
@@ -57,7 +76,7 @@ namespace Core.Business
         {
             if (await _repository.Get(id) == null)
             {
-                _notificator.Notify($"Não existe um {nameof(TEntity)} com {nameof(id)} = {id}");
+                _notificator.Notify($"Não existe um {typeof(TEntity).Name} com {nameof(id)} = {id}");
                 _notificator.SetStatusCode(404);
             }
             else if (!await _repository.Remove(id))

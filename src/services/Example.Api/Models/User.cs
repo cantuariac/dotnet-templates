@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace ExampleApi.Models
+namespace Example.Api.Models
 {
     public class User : Entity<int>
     {

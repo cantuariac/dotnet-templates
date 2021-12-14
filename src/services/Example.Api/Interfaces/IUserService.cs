@@ -1,7 +1,7 @@
 ﻿using Core.Business.Interfaces;
-using ExampleApi.Models;
+using Example.Api.Models;
 
-namespace ExampleApi.Services
+namespace Example.Api.Interfaces
 {
     public interface IUserService : IGenericService<User, int, UserDto>
     {

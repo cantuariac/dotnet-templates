@@ -2,7 +2,7 @@
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace ExampleApi.Models
+namespace Example.Api.Models
 {
     public class UserDto : IValidatable
     {
@@ -19,8 +19,7 @@ namespace ExampleApi.Models
         public UserDtoValidator()
         {
             RuleFor(x => x.Username)
-                .NotEmpty()
-                .Matches("\b[0-9a-zA-Z]+\b");
+                .NotEmpty();
 
             RuleFor(x => x.Password)
                 .NotEmpty();

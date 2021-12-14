@@ -1,18 +1,24 @@
 ﻿using Core.Business;
 using Core.Business.Interfaces;
-using ExampleApi.Data;
-using ExampleApi.Services;
+using Example.Api.Data;
+using Example.Api.Interfaces;
+using Example.Api.Data;
+using Example.Api.Services;
 using Microsoft.OpenApi.Models;
 
-namespace ExampleApi
+namespace Example.Api
 {
     public static class ConfigurationExtentions
     {
         public static IServiceCollection ResolveDependencyInjection(this IServiceCollection services)
         {
             services.AddScoped<INotificator, Notificator>();
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IQuoteMongoRepository, QuoteMongoRepository>();
+            services.AddScoped<CustomRedisRepositoty>();
 
             return services;
         }

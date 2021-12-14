@@ -7,6 +7,7 @@ namespace Core.Business.Interfaces
     {
         Task<List<TEntity>> GetAll();
         Task<TEntity?> Get(TKey id);
+        bool Exists(TKey id);
         Task<bool> Add(TEntity entity);
         Task<bool> Update(TEntity entity);
         Task<bool> Remove(TEntity entity);

@@ -1,5 +1,6 @@
 ﻿using Core.Business.Interfaces;
 using Core.Business.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Api
@@ -9,13 +10,11 @@ namespace Core.Api
     public abstract class GenericEntityController<TEntity, TKey, TEntityDTO> : ControllerBase where TEntity : Entity<TKey> where TKey : IComparable
     {
         protected readonly INotificator _notificator;
-        protected readonly IGenericRepository<TEntity, TKey> _repository;
         protected readonly IGenericService<TEntity, TKey, TEntityDTO> _service;
 
-        protected GenericEntityController(INotificator notificator, IGenericRepository<TEntity, TKey> repository, IGenericService<TEntity, TKey, TEntityDTO> service)
+        protected GenericEntityController(INotificator notificator, IGenericService<TEntity, TKey, TEntityDTO> service)
         {
             _notificator = notificator;
-            _repository = repository;
             _service = service;
         }
 
@@ -26,8 +25,7 @@ namespace Core.Api
 
         protected ObjectResult CreatedResult(TEntity obj)
         {
-            var action = nameof(TEntity) + "." + nameof(Read);
-            return CreatedAtRoute(action, obj.Id, obj);
+            return new ObjectResult(obj) { StatusCode = StatusCodes.Status201Created };
         }
 
         protected BadRequestObjectResult BadRequestNotificationResult()
@@ -41,6 +39,12 @@ namespace Core.Api
             return result;
         }
 
+        [HttpGet]
+        public virtual async Task<ActionResult> ReadAll()
+        {
+            return Ok(await _service.ReadAll());
+        }
+
         [HttpPost]
         public virtual async Task<ActionResult> Create([FromBody] TEntityDTO dto)
         {
@@ -51,21 +55,18 @@ namespace Core.Api
             }
             else
             {
-                var action = nameof(TEntity) + "." + nameof(Read);
-                return CreatedAtRoute(action, entity.Id, entity);
+                var action = typeof(TEntity).Name + "." + nameof(Read);
+                return CreatedResult(entity);
             }
         }
 
-        [HttpGet]
-        public virtual async Task<ActionResult> ReadAll()
-        {
-            return Ok(await _repository.GetAll());
-        }
-
-        [HttpGet("{id}", Name = nameof(TEntity) + "." + nameof(Read))]
+        [HttpGet("{id}")]
+        //[ActionName($"{typeof(TEntity)}.{nameof(Read)}")]
         public virtual async Task<ActionResult> Read(TKey id)
         {
-            return ObjectOrNotFound(await _repository.Get(id));
+            //var name = typeof(TEntity).Name + "." + nameof(Read);
+            //_ = new ActionNameAttribute(name);
+            return ObjectOrNotFound(await _service.Read(id));
         }
 
         [HttpPut("{id}")]

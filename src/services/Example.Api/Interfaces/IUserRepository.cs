@@ -1,7 +1,7 @@
 ﻿using Core.Business.Interfaces;
-using ExampleApi.Models;
+using Example.Api.Models;
 
-namespace ExampleApi.Data
+namespace Example.Api.Interfaces
 {
     public interface IUserRepository : IGenericRepository<User, int>
     {

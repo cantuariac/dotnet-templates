@@ -1,9 +1,9 @@
 ﻿using Core.Business;
 using Core.Business.Interfaces;
-using ExampleApi.Data;
-using ExampleApi.Models;
+using Example.Api.Interfaces;
+using Example.Api.Models;
 
-namespace ExampleApi.Services
+namespace Example.Api.Services
 {
     public class UserService : GenericService<User, int, UserDto>, IUserService
     {
@@ -16,25 +16,7 @@ namespace ExampleApi.Services
 
         public override User MapFrom(UserDto entityDto)
         {
-            return new User(entityDto.Username, "");
+            return new User(entityDto.Username, User.HashPassword(entityDto.Password));
         }
-
-        //public async Task<User> Create(UserDto entityDto)
-        //{
-        //    var user = new User(entityDto.Username, "");
-        //    await userRepository.Add(user);
-        //    return user;
-        //}
-
-        //public async Task Update(int id, UserDto entityDto)
-        //{
-        //    var user = new User(entityDto.Username, "");
-        //    await userRepository.Update(user);
-        //}
-
-        //public async Task Delete(int id)
-        //{
-        //    await userRepository.Remove(id);
-        //}
     }
 }

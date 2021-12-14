@@ -45,6 +45,17 @@ namespace Core.Data
             }
         }
 
+        public virtual bool Exists(TKey id)
+        {
+            var entity = DbSet.Find(id);
+            if (entity == null) { return false; }
+            else
+            {
+                Context.Entry(entity).State = EntityState.Detached;
+                return true;
+            }
+        }
+
         public virtual async Task<bool> Update(TEntity entity)
         {
             try
@@ -54,8 +65,9 @@ namespace Core.Data
                 return true;
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
 
             }

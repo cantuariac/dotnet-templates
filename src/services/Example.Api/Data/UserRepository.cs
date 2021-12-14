@@ -1,7 +1,8 @@
 ﻿using Core.Data;
-using ExampleApi.Models;
+using Example.Api.Interfaces;
+using Example.Api.Models;
 
-namespace ExampleApi.Data
+namespace Example.Api.Data
 {
     public class UserRepository : GenericRepository<User, int>, IUserRepository
     {

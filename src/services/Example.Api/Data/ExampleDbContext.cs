@@ -1,7 +1,7 @@
 ﻿using Core.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExampleApi.Data
+namespace Example.Api.Data
 {
     public class ExampleDbContext : CoreDbContext<ExampleDbContext>
     {

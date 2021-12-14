@@ -1,16 +1,20 @@
-using Core.Api;
-using ExampleApi;
-using ExampleApi.Data;
+using Core.Api.Configurations;
+using Example.Api;
+using Example.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
 // Add services to the container.
 
-builder.Services.ResolvePostgres<ExampleDbContext>(configuration.GetConnectionString("DefaultConnection"));
-builder.Services.ResolveDependencyInjection();
+builder.Services.ResolvePostgres<ExampleDbContext>(configuration.GetConnectionString("PostgresConnection"));
+builder.Services.ResolveMongoDB(configuration.GetConnectionString("MongoConnection"));
+builder.Services.ResolveRedis(configuration.GetConnectionString("RedisConnection"));
+
 builder.Services.ResolveJWT(configuration.GetSection("JWT:Secret").Value);
+
 builder.Services.ResolveSwagger();
+builder.Services.ResolveDependencyInjection();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

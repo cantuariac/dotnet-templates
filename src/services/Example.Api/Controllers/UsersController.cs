@@ -1,58 +1,29 @@
 ﻿using Core.Api;
 using Core.Business.Interfaces;
-using ExampleApi.Data;
-using ExampleApi.Models;
-using ExampleApi.Services;
+using Example.Api.Interfaces;
+using Example.Api.Models;
+using Microsoft.AspNetCore.Mvc;
 
-namespace ExampleApi.Controllers
+namespace Example.Api.Controllers
 {
     public class UsersController : GenericEntityController<User, int, UserDto>
     {
 
-        private readonly IUserRepository _userRepository;
         private readonly IUserService _userService;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(INotificator notificator, IUserRepository userRepository, IUserService userService) : base(notificator, userRepository, userService)
+        public UsersController(INotificator notificator, IUserService userService, ILogger<UsersController> logger) : base(notificator, userService)
         {
-            _userRepository = userRepository;
             _userService = userService;
+            _logger = logger;
         }
 
-        //[HttpGet]
-        //public override async Task<ActionResult> ReadAll()
-        //{
-        //    Console.WriteLine("overhide ReadAll UsersController");
-        //    return Ok(await _userRepository.GetAll());
-        //}
-
-        //[HttpGet("{id}", Name = nameof(UsersController) + "." + nameof(Read))]
-        //public override async Task<ActionResult> Read(int id)
-        //{
-        //    return ObjectOrNotFound(await _userRepository.Get(id));
-        //}
-
-        //[HttpPost]
-        //public override async Task<ActionResult> Create([FromBody] UserDto userDto)
-        //{
-        //    var user = await _userService.Create(userDto);
-        //    //var action = this.NameOf() + "." + nameof(Read);
-        //    //return CreatedAtRoute(action, new { id = user.Id }, user);
-        //    return SimpleCreatedResult(user, user.Id);
-        //}
-
-        //[HttpPut("{id}")]
-        //public override async Task<ActionResult> Update(int id, [FromBody] UserDto userDto)
-        //{
-        //    await _userService.Update(id, userDto);
-        //    return Ok();
-        //}
-
-        //[HttpDelete("{id}")]
-        //public override async Task<ActionResult> Delete(int id)
-        //{
-        //    Console.WriteLine("overridden Delete@UsersController");
-        //    await _userService.Delete(id);
-        //    return Ok();
-        //}
+        [ActionName($"{nameof(Models.User)}.{nameof(Read)}")]
+        public override Task<ActionResult> Read(int id)
+        {
+            var action = $"{nameof(Models.User)}.{nameof(Read)}";
+            _logger.LogInformation(action);
+            return base.Read(id);
+        }
     }
 }

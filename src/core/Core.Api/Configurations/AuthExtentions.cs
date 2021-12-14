@@ -1,22 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Core.Api
+namespace Core.Api.Configurations
 {
-    public static class ConfigurationExtentions
+    public static class AuthExtentions
     {
-        public static IServiceCollection ResolvePostgres<T>(this IServiceCollection services, String connectionString) where T : DbContext
-        {
-            services.AddDbContext<T>(options =>
-            {
-                options.UseNpgsql(connectionString);
-            }
-                );
-            return services;
-        }
 
         public static IServiceCollection ResolveJWT(this IServiceCollection services, String secret)
         {
