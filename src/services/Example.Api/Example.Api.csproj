@@ -10,6 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Confluent.Kafka" Version="1.8.2" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
@@ -22,8 +23,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\core\Core.Api\Core.Api.csproj" />
-        <ProjectReference Include="..\..\core\Core.Business\Core.Business.csproj" />
-        <ProjectReference Include="..\..\core\Core.Data\Core.Data.csproj" />
     </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ var configuration = builder.Services.BuildServiceProvider().GetRequiredService<I
 // Add services to the container.
 
 builder.Services.ResolvePostgres<ExampleDbContext>(configuration.GetConnectionString("PostgresConnection"));
-builder.Services.ResolveMongoDB(configuration.GetConnectionString("MongoConnection"));
+builder.Services.ResolveMongoDB<ExampleMongoContext>(configuration.GetConnectionString("MongoConnection"));
 builder.Services.ResolveRedis(configuration.GetConnectionString("RedisConnection"));
 
 builder.Services.ResolveJWT(configuration.GetSection("JWT:Secret").Value);

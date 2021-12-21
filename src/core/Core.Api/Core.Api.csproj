@@ -7,16 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Confluent.Kafka" Version="1.8.2" />
+        <PackageReference Include="FluentValidation" Version="10.3.5" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.0" />
+        <PackageReference Include="MongoDB.Driver" Version="2.14.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.1" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Core.Business\Core.Business.csproj" />
-        <ProjectReference Include="..\Core.Data\Core.Data.csproj" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
 </Project>

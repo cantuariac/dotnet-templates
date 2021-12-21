@@ -1,5 +1,5 @@
-﻿using Core.Business;
-using Core.Business.Interfaces;
+﻿using Core.Api.Services;
+using Core.Api.Interfaces;
 using Example.Api.Interfaces;
 using Example.Api.Models;
 

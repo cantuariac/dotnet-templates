@@ -1,4 +1,4 @@
-﻿using Core.Business.Interfaces;
+﻿using Core.Api.Interfaces;
 using FluentValidation;
 using FluentValidation.Results;
 

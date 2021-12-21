@@ -1,4 +1,5 @@
-﻿using Core.Business.Interfaces;
+﻿using Core.Api.Interfaces;
+using Core.Business.Interfaces;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -7,16 +8,15 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Data
+namespace Core.Api.Data
 {
     public class GenericMongoRepository<T> : IGenericMongoRepository<T>
     {
         protected IMongoCollection<T> Collection;
 
 
-        public GenericMongoRepository(CoreMongoContext  mongoContext)
+        public GenericMongoRepository(CoreMongoContext mongoContext)
         {
-            //var database = mongoClient.GetDatabase(dbName);
             Collection = mongoContext.Database.GetCollection<T>(typeof(T).Name.ToLower());
         }
 

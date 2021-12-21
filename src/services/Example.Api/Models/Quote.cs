@@ -1,4 +1,4 @@
-﻿using Core.Business.Models;
+﻿using Core.Api.Models;
 
 namespace Example.Api.Models
 {

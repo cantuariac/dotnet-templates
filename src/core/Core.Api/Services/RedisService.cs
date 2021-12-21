@@ -2,13 +2,13 @@
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Core.Data
+namespace Core.Api.Services
 {
-    public class RedisRepository
+    public class RedisService
     {
         private readonly IDistributedCache _distributedCache;
 
-        public RedisRepository(IDistributedCache distributedCache)
+        public RedisService(IDistributedCache distributedCache)
         {
             _distributedCache = distributedCache;
         }

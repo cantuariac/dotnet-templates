@@ -1,4 +1,4 @@
-﻿using Core.Data;
+﻿using Core.Api.Data;
 using Example.Api.Interfaces;
 using Example.Api.Models;
 

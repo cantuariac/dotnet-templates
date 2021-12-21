@@ -1,8 +1,7 @@
-﻿using Core.Business;
-using Core.Business.Interfaces;
+﻿using Core.Api.Services;
+using Core.Api.Interfaces;
 using Example.Api.Data;
 using Example.Api.Interfaces;
-using Example.Api.Data;
 using Example.Api.Services;
 using Microsoft.OpenApi.Models;
 
@@ -18,7 +17,7 @@ namespace Example.Api
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IQuoteMongoRepository, QuoteMongoRepository>();
-            services.AddScoped<CustomRedisRepositoty>();
+            services.AddScoped<CustomRedisService>();
 
             return services;
         }

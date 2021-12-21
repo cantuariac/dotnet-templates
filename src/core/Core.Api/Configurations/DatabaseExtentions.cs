@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core.Api.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 
@@ -16,12 +17,14 @@ namespace Core.Api.Configurations
             return services;
         }
 
-        public static IServiceCollection ResolveMongoDB(this IServiceCollection services, String connectionString)
+        public static IServiceCollection ResolveMongoDB<TContext>(this IServiceCollection services, String connectionString) where TContext : CoreMongoContext, new()
         {
             //BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
-            services.AddScoped<IMongoClient>(_ =>
+            services.AddScoped<TContext>(_ =>
             {
-                return new MongoClient(connectionString);
+                var context = new TContext();
+                context.Configure(connectionString);
+                return context;
             });
 
             return services;
