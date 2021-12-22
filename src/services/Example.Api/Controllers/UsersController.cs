@@ -1,4 +1,4 @@
-﻿using Core.Api;
+﻿using Core.Api.Controllers;
 using Core.Api.Interfaces;
 using Example.Api.Interfaces;
 using Example.Api.Models;

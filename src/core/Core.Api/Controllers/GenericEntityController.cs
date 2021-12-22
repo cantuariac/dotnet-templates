@@ -3,18 +3,17 @@ using Core.Api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Core.Api
-{//, ICRUDController<TKey, TEntityDTO>
-    [Route("api/[controller]")]
+namespace Core.Api.Controllers
+{
     [ApiController]
-    public abstract class GenericEntityController<TEntity, TKey, TEntityDTO> : ControllerBase where TEntity : Entity<TKey> where TKey : IComparable
+    public abstract class GenericEntityController<TEntity, TKey, TEntityDTO> : CoreApiController
+                                                    where TEntity : Entity<TKey>
+                                                    where TKey : IComparable
     {
-        protected readonly INotificator _notificator;
-        protected readonly IGenericService<TEntity, TKey, TEntityDTO> _service;
+        protected readonly IGenericEntityService<TEntity, TKey, TEntityDTO> _service;
 
-        protected GenericEntityController(INotificator notificator, IGenericService<TEntity, TKey, TEntityDTO> service)
+        protected GenericEntityController(INotificator notificator, IGenericEntityService<TEntity, TKey, TEntityDTO> service) : base(notificator)
         {
-            _notificator = notificator;
             _service = service;
         }
 
@@ -26,17 +25,6 @@ namespace Core.Api
         protected ObjectResult CreatedResult(TEntity obj)
         {
             return new ObjectResult(obj) { StatusCode = StatusCodes.Status201Created };
-        }
-
-        protected BadRequestObjectResult BadRequestNotificationResult()
-        {
-            foreach (var error in _notificator.GetNotifications())
-            {
-                ModelState.AddModelError(error.Label, error.Message);
-            }
-            var result = BadRequest(ModelState);
-            result.StatusCode = _notificator.GetStatusCode();
-            return result;
         }
 
         [HttpGet]

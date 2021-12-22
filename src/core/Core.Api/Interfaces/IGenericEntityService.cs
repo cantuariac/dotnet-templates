@@ -2,7 +2,7 @@
 
 namespace Core.Api.Interfaces
 {
-    public interface IGenericService<TEntity, TKey, TEntityDto> where TEntity : Entity<TKey> where TKey : IComparable
+    public interface IGenericEntityService<TEntity, TKey, TEntityDto> where TEntity : Entity<TKey> where TKey : IComparable
     {
         Task<List<TEntity>> ReadAll();
         Task<TEntity?> Create(TEntityDto entityDto);

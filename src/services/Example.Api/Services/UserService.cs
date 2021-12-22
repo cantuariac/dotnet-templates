@@ -5,7 +5,7 @@ using Example.Api.Models;
 
 namespace Example.Api.Services
 {
-    public class UserService : GenericService<User, int, UserDto>, IUserService
+    public class UserService : GenericEntityService<User, int, UserDto>, IUserService
     {
         private readonly IUserRepository userRepository;
 

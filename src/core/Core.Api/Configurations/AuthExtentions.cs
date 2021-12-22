@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Core.Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Core.Api.Configurations
     public static class AuthExtentions
     {
 
-        public static IServiceCollection ResolveJWT(this IServiceCollection services, String secret)
+        public static IServiceCollection ResolveJWT(this IServiceCollection services, string secret)
         {
             var secret_bytes = Encoding.ASCII.GetBytes(secret);
             services.AddAuthentication(x =>
@@ -28,6 +29,7 @@ namespace Core.Api.Configurations
                         ValidateAudience = false
                     };
                 });
+            services.AddScoped(_=>new AuthService(secret));
             return services;
         }
     }

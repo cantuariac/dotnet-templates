@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace Core.Api.Services
 {
-    public abstract class GenericService<TEntity, TKey, TEntityDto> : IGenericService<TEntity, TKey, TEntityDto>
+    public abstract class GenericEntityService<TEntity, TKey, TEntityDto> : IGenericEntityService<TEntity, TKey, TEntityDto>
                                                     where TEntity : Entity<TKey>
                                                     where TKey : IComparable
                                                     where TEntityDto : IValidatable
@@ -13,7 +13,7 @@ namespace Core.Api.Services
         protected readonly INotificator _notificator;
         protected readonly IGenericRepository<TEntity, TKey> _repository;
 
-        protected GenericService(INotificator notificator, IGenericRepository<TEntity, TKey> repository)
+        protected GenericEntityService(INotificator notificator, IGenericRepository<TEntity, TKey> repository)
         {
             _notificator = notificator;
             _repository = repository;
