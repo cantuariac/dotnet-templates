@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Example.Api.Controllers
 {
+    [Route("api/[controller]")]
     public class UsersController : GenericEntityController<User, int, UserDto>
     {
 

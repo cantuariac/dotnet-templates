@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace Core.Api.Controllers
 {
     [ApiController]
+    [Route("[auth]")]
     public abstract class CoreAuthController<TSignInDTO, TSignUpDTO> : CoreApiController
     {
         private readonly AuthService _authService;
@@ -20,9 +21,11 @@ namespace Core.Api.Controllers
         }
 
         [HttpPost]
+        [Route("[action]")]
         public abstract Task<IActionResult> SignUp(TSignUpDTO signUpDTO);
 
         [HttpPost]
+        [Route("[action]")]
         public abstract Task<IActionResult> SignIn(TSignInDTO signInDTO);
     }
 }
